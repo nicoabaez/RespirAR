@@ -36,24 +36,19 @@
 </script>
 
 <style scoped lang="css">
+
   .jumbotron {
-    background-color: #283456;
+    /*background: linear-gradient(to bottom right, red 0%,green 40%,blue 90%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: #283456;
     color: white;
   }
 
-  hr {
-    background-color: #bbb;
-  }
-
-  .form-control{
-    border: 1px solid #00623b;
-    color: white;
-  }
-
-  .container-fluid{
-    background: linear-gradient(to bottom right, red 0%,green 40%,blue 90%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  .contenedorGeneral{
+    background:#202a46;
     background-attachment: fixed;
     border-radius: 20px;
-    padding: 20px ;
+    padding: 10px;
+    border-style: solid;
+    border-color: #1a2238;
   }
 </style>
