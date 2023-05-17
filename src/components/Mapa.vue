@@ -1,0 +1,59 @@
+<template lang="html">
+
+  <section class="src-componentes-mapa">
+    <h1>src-componentes-mapa Component</h1>
+      <div class="jumbotron">
+        <div class="container-fluid contenedorGeneral">
+
+        </div>
+      </div>
+  </section>
+
+</template>
+
+<script lang="js">
+
+  export default  {
+    name: 'src-componentes-mapa',
+    props: [],
+    mounted () {
+
+    },
+    data () {
+      return {
+
+      }
+    },
+    methods: {
+
+    },
+    computed: {
+
+    }
+}
+
+
+</script>
+
+<style scoped lang="css">
+  .jumbotron {
+    background-color: #283456;
+    color: white;
+  }
+
+  hr {
+    background-color: #bbb;
+  }
+
+  .form-control{
+    border: 1px solid #00623b;
+    color: white;
+  }
+
+  .container-fluid{
+    background: linear-gradient(to bottom right, red 0%,green 40%,blue 90%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background-attachment: fixed;
+    border-radius: 20px;
+    padding: 20px ;
+  }
+</style>
