@@ -2,10 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import './bootstrap'
 import { router } from  './router'
+import "./map"
+import 'leaflet/dist/leaflet.css';
+
 //import axios from './axios'
 //import store from './store'
 //import './globalMixins'
 //import './globalFilters'
+
+
 
 Vue.config.productionTip = false
 

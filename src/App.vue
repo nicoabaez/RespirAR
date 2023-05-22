@@ -1,16 +1,18 @@
 <template>
   <div class="fondo">
-    <Navbar class="navbar" />
     <router-view></router-view>
+    
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+//import Navbar from './components/Navbar.vue'
+//import Mapa from "./components/Map.vue"
 export default {
   name: 'App',
   components: {
-    Navbar
+    //Navbar
+    //Mapa
   }
 }
 </script>
@@ -26,10 +28,7 @@ export default {
 }
 
 /* NUEVO: */
-.fondo{
-  margin-left: 10rem;
-  margin-right: 10rem;
-}
+
 .navbar{
   padding: 0.5rem 2rem;
   margin-top: 3rem;
