@@ -1,0 +1,29 @@
+# version: "3"
+
+# services:
+#   web:
+#     container_name: exampleapp
+#     restart: always
+#     build: .
+#     ports: 
+#       - "8080:3000"
+#     links:
+#       - mongo
+#     volumes:
+#       - .:/usr/src/app
+#   mongo:
+#     container_name: myMongoDataBase
+#     image: mongo
+#     ports:
+#       - "27018:27017"
+#     logging:
+#       driver: none
+services:
+  backend:
+    build: back/.
+    ports:
+      - "3000:3000"    
+  frontend:
+    build: front/.
+    ports:
+      - "8080:8080"    
