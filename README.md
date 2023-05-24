@@ -1,4 +1,4 @@
-# respirar
+# respirar-vue3-combinado-v1
 
 ## Project setup
 ```

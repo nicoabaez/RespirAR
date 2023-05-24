@@ -1,18 +1,14 @@
-<template>
-  <div class="fondo">
-    <router-view></router-view>
-    
-  </div>
+<template class="container-fluid">
+  <Navbar class="navbar" />
+  <router-view />
 </template>
 
 <script>
-//import Navbar from './components/Navbar.vue'
-//import Mapa from "./components/Map.vue"
+import Navbar from './components/Navbar.vue'
 export default {
   name: 'App',
   components: {
-    //Navbar
-    //Mapa
+    Navbar
   }
 }
 </script>
@@ -24,16 +20,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 /* NUEVO: */
-
-.navbar{
-  padding: 0.5rem 2rem;
-  margin-top: 3rem;
-}
-
 h1 {
   color: rgb(125, 116, 240);
 }

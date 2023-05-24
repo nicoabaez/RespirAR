@@ -1,22 +1,16 @@
-import Vue from 'vue'
-import App from './App.vue'
-import './bootstrap'
-import { router } from  './router'
-import "./map"
-import 'leaflet/dist/leaflet.css';
+import { createApp } from 'vue';
+import { router } from './router.js';
+import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet';
+import App from './App.vue';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './map.js'
 
-//import axios from './axios'
-//import store from './store'
-//import './globalMixins'
-//import './globalFilters'
+const app = createApp(App);
+app.use(router);
 
+app.component('l-map', LMap);
+app.component('l-tile-layer', LTileLayer);
+app.component('l-marker', LMarker);
+app.component('l-popup', LPopup);
 
-
-Vue.config.productionTip = false
-
-new Vue({
-  router, // es igual es -> router: router,
-  //store,
-  //axios,
-  render: h => h(App),
-}).$mount('#app')
+app.mount('#app');
