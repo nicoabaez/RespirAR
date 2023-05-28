@@ -19,11 +19,26 @@
 #     logging:
 #       driver: none
 services:
-  backend:
+   mongo:
+    container_name: myMongoDataBase
+    image: mongo
+    command: --nojournal
+    ports:
+       - "27018:27017"
+    logging:
+     driver: none
+   orion:
+    image: fiware/orion
+    links:
+      - mongo
+    ports:
+      - "1026:1026"
+    command: -dbhost mongo
+   backend:
     build: back/.
     ports:
       - "3000:3000"    
-  frontend:
+   frontend:
     build: front/.
     ports:
       - "8080:8080"    
