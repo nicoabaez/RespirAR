@@ -11,7 +11,8 @@ export class RouterMain {
 
         //this.router.get('/', (res) => {res.send("HOLA MUNDOOO")})
         this.router.get('/', this.controladorStations.holaMundo)
-
+        
+        this.router.get('/estaciones', this.controladorStations.getStations)
         /*
         
         //ENVIAR GASTOS POR MAIL
