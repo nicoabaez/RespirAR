@@ -20,8 +20,7 @@ class PersistenciaMongoDAO {
         
     }
 
-    findStation = async _ => {
-        if (!CnxMongoDB.connection) return []
+    findStations = async _ =>{
         try {
             let station = await CnxMongoDB.db.collection('stations').find({}).project({ _id:0 }).toArray() //cambiar en project lo que queremos mostrar
             return station
@@ -31,6 +30,27 @@ class PersistenciaMongoDAO {
         }
     }
 
+    // setStations = async _ => {
+    //     if (!CnxMongoDB.connection) return []
+    //     try {
+    //         const config ={
+    //             headers:{
+    //                 "fiware-service":"respirar",
+    //                 "fiware-servicepath":  "/"
+    //             }}
+    //         return await axios.get("http://localhost:1026/v2/entities", config);
+    //     } catch (error) {
+    //         console.error('Error en getStations()', error.message)
+    //     }
+    // }
+
+    // setStation = async stations => {
+    //     if  (!CnxMongoDB.connection) return {}
+    //     await CnxMongoDB.db.collection('stations').insertAll(stations)
+    //     return stations
+    // }
+
+    /*
     saveStation = async station => {
         if  (!CnxMongoDB.connection) return {}
         //station.importe = parseInt(station.importe)
@@ -57,6 +77,7 @@ class PersistenciaMongoDAO {
 
         return stationEliminado
     }
+    */
 }
 
 export default PersistenciaMongoDAO

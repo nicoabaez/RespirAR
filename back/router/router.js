@@ -9,29 +9,23 @@ export class RouterMain {
 
     start() {
 
-        //this.router.get('/', (res) => {res.send("HOLA MUNDOOO")})
         this.router.get('/', this.controladorStations.holaMundo)
         
-        this.router.get('/estaciones', this.controladorStations.getStations)
-        /*
+        this.router.get('/estaciones/:id?', this.controladorStations.getStations)
         
-        //ENVIAR GASTOS POR MAIL
-        this.router.post('/email', this.controladorGastos.enviarEmail) 
-        
-        //DOCUMENTACION
-        this.router.get("/documentacion", this.controladorGastos.getDocumentacion )
+        // // POST Station
+        // this.router.post('/', this.controladorStations.postStation)
 
+        // // PUT Station 
+        // this.router.put('/:id', this.controladorStations.putStation)
+
+        // // DELETE Station 
+        // this.router.delete('/:id', this.controladorStations.deleteStation)
+                
+        
+        /*
         //GASTOS EN PDF
         this.router.get('/pdf', this.controladorGastos.getPDFGastos) 
-        
-        //SUBIR GASTOS A DRIVE
-        this.router.post('/subirpdf', this.controladorGastos.subirPDF) 
-
-        //GASTOS PENDIENTES
-        this.router.get('/pendientes', this.controladorGastos.getGastosPendientes)
-
-        //GASTOS RENDIDOS
-        this.router.get('/rendidos', this.controladorGastos.getGastosRendidos)
 
         //TOTAL DE GASTOS
         this.router.get('/total', this.controladorGastos.getTotalGastos)
@@ -41,16 +35,6 @@ export class RouterMain {
 
         // GET Gastos
         this.router.get('/:id?', this.controladorGastos.getGastos)
-
-        // POST Gasto
-        this.router.post('/', this.controladorGastos.postGasto)
-
-        // PUT Gasto 
-        this.router.put('/:id', this.controladorGastos.putGasto)
-
-        // DELETE Gasto 
-        this.router.delete('/:id', this.controladorGastos.deleteGasto)
-        
         */
         return this.router
     }

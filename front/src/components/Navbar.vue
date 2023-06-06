@@ -22,12 +22,8 @@
            <router-link to="/mapa" class="nav-link">Mapa</router-link>
         </li>
         <li class="nav-item">          
-          <a href="http://127.0.0.1:3000/hello" class="nav-link">Hola Mundo</a>           
+          <a href="http://127.0.0.1:3000/" class="nav-link">Hola Mundo</a>           
         </li>
-        <li class="nav-item">          
-          <button class="nav-item btn btn-primary" style="color: red" @click="getStations()">Estaciones</button>        
-        </li>
-
               
       </ul>
       <form class="d-flex">
@@ -98,39 +94,12 @@
   export default  {
     name: 'src-componentes-navbar',
     props: [],
-    mounted () {
-      this.axios
-      .get('http://127.0.0.1:3000/hello/estaciones')
-      .then((response) => {
-        console.log(response)
-      })
-    },
+    mounted () {},
     data () {
-      return {
-        urlEstaciones: "http://127.0.0.1:3000/hello/estaciones",
-        estaciones: [],
-      }
+      return {}
     },
-    methods: {
-     async getStations(){
-      try {
-        
-         let { data : estaciones} = await this.axios.get(this.urlEstaciones)
-         console.log(estaciones)
-         this.estaciones = estaciones
-         window.alert("Hay: " + this.estaciones.length  )
-  
-      } catch (error) {
-        console.error('****Error en getStations****', {cause: error})
-        
-      }
-
-      }
-      
-    },
-    computed: {
-
-    }
+    methods: {},
+    computed: {}
 }
 
 

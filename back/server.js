@@ -27,12 +27,11 @@ class Server {
             this.app.use(express.json())
             this.app.use(express.urlencoded({ extended: true }))
 
-            this.app.use('/hello', new RouterMain().start())
+            this.app.use('/', new RouterMain().start())
 
             if (this.persistencia == 'MONGO') {
                 await CnxMongoDB.conectar()
             }
-
             this.server = this.app.listen(this.port, () =>
                 console.log((`\x1b[32m [OK] \x1b[96m** Servidor express escuchando en el puerto\x1b[93m [${config.PORT}] \x1b[96m** \x1b[0m`)))
             this.server.on('error', error =>

@@ -1,13 +1,9 @@
- import OrionApi from '../fiware/orion.js'
-// import ApiGoogleDrive from '../api/gdrive.js';
-// import path from 'path'
-// const __dirname = path.resolve();
+import OrionApi from '../api/orion.js'
 
 class ControladorStations {
 
     constructor() {
         this.apiStations = new OrionApi()
-        // this.apiGoogleDrive = new ApiGoogleDrive
     }
 
     holaMundo = async (req,res) => {
@@ -16,8 +12,8 @@ class ControladorStations {
 
     getStations = async (req,res) => {
         try {
-            const stations = await this.apiStations.getStations()
-            res.json(stations.data)
+            const { id } = req.params
+            res.json(await this.apiStations.getStations(id))
         } catch (error) {
             console.error("Error controller stations " + error)
         }

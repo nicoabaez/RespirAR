@@ -30,14 +30,20 @@
   export default  {
     name: 'src-componentes-mapa',
     props: [],
-    mounted () {},
+    async mounted () {
+      await this.getStations()
+    },
     data () {
       return {
+        urlEstaciones: "http://127.0.0.1:3000/estaciones",
+        estaciones: [],
         markers: [
           { name: "Estacion Orion",
             coordinates : [-38, -60]},
           { name: "Estacion Neptuno",
             coordinates : [-30, -65]},
+          { name: "this.estacion1.id",
+            coordinates: [-39, -59] || this.estaciones[0].location.value },
           ],
         actualMarker: {},
         showList: false,
@@ -55,8 +61,18 @@
         console.log(this.actualMarker);
       },
       closeList() {
-      this.showList = false;
+        this.showList = false;
       },
+      async getStations(){
+        try {
+          let e = (await this.axios.get(this.urlEstaciones)).data
+          this.estaciones = e
+          console.log(e[0].location.value)
+          window.alert("Estaciones encontradas: " + this.estaciones.length  )
+        } catch (error) {
+          console.error('****Error en getStations****', {cause: error})
+        }
+      }
     },
     computed: {}
   }
