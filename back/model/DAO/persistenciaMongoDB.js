@@ -1,17 +1,22 @@
 import CnxMongoDB from '../DB.js'
 import { ObjectId } from "mongodb"
+import config from '../../config.js'
+
+const collection = config.COLLECTION
 
 class PersistenciaMongoDAO {
 
-
+/*
     findStation = async id => {
+        console.log(id)
         if (!CnxMongoDB.connection) return {}
         try {
-            let station = await CnxMongoDB.db.collection('stations').findOne({_id: ObjectId(id)})
+            let filtro = { '_id.id': id };
+            let station = await CnxMongoDB.db.collection(collection).findOne(filtro)
             return station 
         }catch{
             try{
-                let station = await CnxMongoDB.db.collection('stations').findOne({ id: id })
+                let station = await CnxMongoDB.db.collection(collection).findOne({ id: id })
                 return station 
             }catch{
                 return {}
@@ -22,14 +27,16 @@ class PersistenciaMongoDAO {
 
     findStations = async _ =>{
         try {
-            let station = await CnxMongoDB.db.collection('stations').find({}).project({ _id:0 }).toArray() //cambiar en project lo que queremos mostrar
+            let station = await CnxMongoDB.db.collection(collection).find().toArray() //.project({ _id:0 }).toArray()
+            console.log("STATIONS:", station)
             return station
         }
-        catch {
+        catch(err) {
+            console.log(err)
             return []
         }
     }
-
+*/
     // setStations = async _ => {
     //     if (!CnxMongoDB.connection) return []
     //     try {

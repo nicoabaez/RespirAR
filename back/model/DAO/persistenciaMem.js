@@ -1,5 +1,5 @@
 class PersistenciaMemDAO {
-
+/*
     constructor() {
         this.stations = [
             { decripcion: 'Estás en memoria, acá no hay stations.' },
@@ -31,7 +31,7 @@ class PersistenciaMemDAO {
     }
 
     updateStation = async (station,id) => {
-        /* Actualización total */    
+        // Actualización total 
         station.id = id
         const index = this.stations.findIndex(station => station.id == id)
         this.stations.splice(index, 1, station)
@@ -45,6 +45,7 @@ class PersistenciaMemDAO {
         
         return station    
     }
+*/
 }
 
 export default PersistenciaMemDAO
