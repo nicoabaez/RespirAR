@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config.js';
-import persistenciaFactory from '../model/DAO/persistenciaFactory.js'
+//import persistenciaFactory from '../model/DAO/persistenciaFactory.js'
 
 const headerAxios = {headers:{"fiware-service":"respirar","fiware-servicepath":  "/"}}
 
@@ -8,7 +8,7 @@ class OrionApi {
 
 
     constructor() {
-        this.stationsModel = persistenciaFactory.get(config.MODO_PERSISTENCIA)
+        //this.stationsModel = persistenciaFactory.get(config.MODO_PERSISTENCIA)
     }
 
     async getStations(id) {
