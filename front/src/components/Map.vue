@@ -76,8 +76,14 @@
         this.showList = false;
       },
       async getStations() {
-        let e = (await this.axios.get(this.urlEstaciones)).data
-        this.estaciones = {...e}
+        try{
+          let e = (await this.axios.get(this.urlEstaciones)).data
+          this.estaciones = {...e}
+        }
+        catch{
+          console.log("Error en getStations() MAP VIEW")
+        }
+
         // console.log(e)
         // console.log(e[0].location.value)
       }
