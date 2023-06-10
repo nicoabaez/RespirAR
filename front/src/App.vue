@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Navbar class="navbar" />
-    <router-view />
+    <Navbar />
+    <router-view class="componentes"/>
   </div>
 
 </template>
@@ -17,16 +17,17 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  body{
+    background-color: #283456;
+    background: url('http://www.calidadmedioambiental.org/static/media/background.e48737ad.png') no-repeat 50% fixed;
+    background-size: cover;
+  }
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
 
-/* NUEVO: */
-h1 {
-  color: rgb(125, 116, 240);
-}
 </style>

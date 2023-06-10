@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row">
-    <l-map style="height:92.9vh" :zoom="zoom" :center="center">
+    <l-map style="height: 92.4vh" :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker
         v-for="estacion in this.estaciones"
