@@ -1,4 +1,12 @@
 services:
+  # backend:
+  #   build: back/.
+  #   ports:
+  #     - "3000:3000"    
+  # frontend:
+  #   build: front/.
+  #   ports:
+  #     - "8080:8080"
   mongo-db:
     image: mongo
     hostname: mongo-db
@@ -8,6 +16,9 @@ services:
     networks:
       - fiware_network
     command: --nojournal --bind_ip_all
+    volumes:
+      - mongo-data:/data/db
+      - mongo-data:/data/configdb
   orion:
     image: fiware/orion
     links:
@@ -17,6 +28,8 @@ services:
     command: -dbhost mongo-db
     networks:
       - fiware_network
+    volumes:
+      - orion-data:/var/lib/orion
   draco:
     image: ging/fiware-draco:latest
     container_name: draco
@@ -24,8 +37,8 @@ services:
       - NIFI_WEB_HTTPS_PORT=9090
       - SINGLE_USER_CREDENTIALS_USERNAME=admin
       - SINGLE_USER_CREDENTIALS_PASSWORD=pass1234567890
-      #- DRACO_DATABASE_DRIVER_CLASS_NAME=com.mongodb.MongoClient
-      #- DRACO_DATABASE_URL=mongodb://172.18.0.2:27017/
+      - DRACO_DATABASE_DRIVER_CLASS_NAME=com.mongodb.MongoClient
+      - DRACO_DATABASE_URL=mongodb://mongo-db:27017/
     ports:
       - "9090:9090"
       - "5050:5050"
@@ -33,34 +46,16 @@ services:
       - mongo-db
     networks:
       - fiware_network
+    volumes:
+      - draco-data:/opt/nifi/nifi-current/conf
+      - draco-data:/opt/nifi/nifi-current/logs
+      - draco-data:/opt/nifi/nifi-current/state
+      - draco-data:/opt/nifi/nifi-current/provenance_repository
+      - draco-data:/opt/nifi/nifi-current/content_repository
+      - draco-data:/opt/nifi/nifi-current/database_repository
+      - draco-data:/opt/nifi/nifi-current/flowfile_repository
     healthcheck:
-      test: curl --fail -s https://localhost:9090/nifi-api/system-diagnostics || exit 1
-  #mongodb-draco:
-    # image: mongo
-    # container_name: mongodb-draco
-    # command: --nojournal
-    # restart: always
-    # ports:
-    #   - "27018:27018"
-    # logging:
-    #  driver: none
-  # mysql:
-  #   image: mysql:5.7.22
-  #   container_name: mysql
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   ports:
-  #     - "3306:3306"
-  # backend:
-  #   build: back/.
-  #   ports:
-  #     - "3000:3000"    
-  # frontend:
-  #   build: front/.
-  #   ports:
-  #     - "8080:8080"
+      test: curl --fail -s https://draco:9090/nifi-api/system-diagnostics || exit 1
   iot-agent:
     image: quay.io/fiware/iotagent-ul:latest
     hostname: iot-agent
@@ -89,5 +84,12 @@ services:
         - IOTA_MONGO_DB=iotagentul
         - IOTA_HTTP_PORT=7896
         - IOTA_PROVIDER_URL=http://iot-agent:4041
+    volumes:
+      - iotagent-data:/var/lib/iotagent
 networks:
   fiware_network:
+volumes:
+  mongo-data:
+  draco-data:
+  orion-data:
+  iotagent-data:
