@@ -5,7 +5,7 @@ class CnxMongoDB {
     static connection = false
     static db
     static client
- /*
+ 
     static conectar = async _ => {
         try {
             console.log('\x1b[93m [INFO]\x1b[36m** Conectando a la base de datos... \x1b[0m')
@@ -25,7 +25,7 @@ class CnxMongoDB {
             console.log(`\x1b[31m [ERROR] \x1b[36m ** Error en la conexión de base datos: [ ${error.message} ]** \x1b[0m`)
         }
     }
-*/
+
     static desconectar = async () => {
         if(!CnxMongoDB.connection) return
         await CnxMongoDB.client.close()

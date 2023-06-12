@@ -11,9 +11,10 @@ export class RouterMain {
 
         //this.router.get('/', this.controladorStations.holaMundo)
         this.router.get('/estaciones/:id?', this.controladorStations.getStations)
-
         this.router.get('/atributos/:id', this.controladorStations.getAtributes)
-                
+        this.router.get('/getHistorico/:id', this.controladorStations.getHistorico)
+        this.router.get('/getCSV/:id', this.controladorStations.getCSV)
+        
         // // POST Station
         // this.router.post('/', this.controladorStations.postStation)
 

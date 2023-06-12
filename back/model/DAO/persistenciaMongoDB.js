@@ -1,12 +1,25 @@
 import CnxMongoDB from '../DB.js'
-import { ObjectId } from "mongodb"
-import config from '../../config.js'
+//import { ObjectId } from "mongodb"
+//import config from '../../config.js'
 
-const collection = config.COLLECTION
 
 class PersistenciaMongoDAO {
 
-/*
+
+    getHistorico = async (id) => {
+        const collection = `sth_/_${id}_IoT-Device`
+        if (!CnxMongoDB.connection) return {}
+        try {
+            //let filtro = { '_id.id': id };
+            let sth = await CnxMongoDB.db.collection(collection).find().project({ _id:0, attrType:0, attrMetadata:0 }).toArray()
+            return sth 
+        }catch(err){
+            console.log("Error en MODEL", err)
+            return []
+        }
+    }
+
+
     findStation = async id => {
         console.log(id)
         if (!CnxMongoDB.connection) return {}
@@ -36,7 +49,6 @@ class PersistenciaMongoDAO {
             return []
         }
     }
-*/
     // setStations = async _ => {
     //     if (!CnxMongoDB.connection) return []
     //     try {

@@ -1,7 +1,7 @@
 import PersistenciaMemDAO from './persistenciaMem.js'
 import PersistenciaMongoDAO from './persistenciaMongoDB.js'
 
-/*
+
 class PersistenciaFactoryDAO {
     static get(tipo) {
         switch(tipo) {
@@ -20,4 +20,3 @@ class PersistenciaFactoryDAO {
     }
 }
 export default PersistenciaFactoryDAO
-*/
