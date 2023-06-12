@@ -5,19 +5,24 @@ class ControladorStations {
     constructor() {
         this.apiStations = new OrionApi()
     }
-
-    holaMundo = async (req,res) => {
-        res.json("HOLA MUNDO")
-    }
-
+    
     getStations = async (req,res) => {
         try {
             const { id } = req.params
             res.json(await this.apiStations.getStations(id))
         } catch (error) {
-            console.error("Error controller stations " + error)
+            console.error("Error controller getStations " + error)
         }
 
+    }
+
+    getAtributes = async (req,res) => {
+        try{
+            const { id } = req.params
+            res.json(await this.apiStations.getAtributes(id))
+        } catch(error){
+            console.error("Error controller getAtributes " + error)
+        }
     }
 
     //-----------------------

@@ -9,10 +9,11 @@ export class RouterMain {
 
     start() {
 
-        this.router.get('/', this.controladorStations.holaMundo)
-        
+        //this.router.get('/', this.controladorStations.holaMundo)
         this.router.get('/estaciones/:id?', this.controladorStations.getStations)
-        
+
+        this.router.get('/atributos/:id', this.controladorStations.getAtributes)
+                
         // // POST Station
         // this.router.post('/', this.controladorStations.postStation)
 

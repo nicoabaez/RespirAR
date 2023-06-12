@@ -19,18 +19,19 @@ class OrionApi {
     //Al ser una regla de negocio, acá pedimos los datos actuales a orion y los enviamos a nuestro mongo propio, donde también tendríamos el histórico de las estaciones
     async getStations(){ 
         try {
-            return (await axios.get("http://localhost:1026/v2/entities", headerAxios)).data
+            //return (await axios.get("http://localhost:1026/v2/entities", headerAxios)).data
+            return (await axios.get("http://localhost:1026/v2/entities?type=IoT-Device&options=keyValues", headerAxios)).data
         } catch (error) {
             console.error('Error en getStations()', error.message)
         }
     }
 
-    //Obtiene los atributos de una sola estacion
     async getAtributes(id){
         try {
+            console.log((await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data)
             return (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
         } catch (error) {
-            console.error('Error en getAtributes)', error.message)
+            console.error('Error en getStations()', error.message)
         }
     }
 }
