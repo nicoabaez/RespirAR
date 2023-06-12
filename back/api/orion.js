@@ -24,6 +24,15 @@ class OrionApi {
             console.error('Error en getStations()', error.message)
         }
     }
+
+    //Obtiene los atributos de una sola estacion
+    async getAtributes(id){
+        try {
+            return (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
+        } catch (error) {
+            console.error('Error en getAtributes)', error.message)
+        }
+    }
 }
 
 export default OrionApi

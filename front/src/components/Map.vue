@@ -11,15 +11,128 @@
       </l-marker>
     </l-map>
 
-    <ul class="list-group list-group-flush" v-show="showList" >
-      <li class="list-group-item flex"><button type="button" class="btn-close" aria-label="Close" @click="closeList"></button></li>
-      
-      <li class="list-group-item">{{ actualMarker.id }}</li>
-      <li class="list-group-item">{{ actualMarker.type }}</li>
-      <li class="list-group-item">{{ actualMarker.temperature.value }}</li>
-      <li class="list-group-item">{{ actualMarker.location.value }}</li>
-      <li class="list-group-item">{{ actualMarker.TimeInstant.value }}</li>
-    </ul>
+    <div class="px-3 py-4 bg-white" v-show="showList">
+    <b-button v-b-toggle.sidebar-right style="font-weight: 1000; font-size: 1.3em;">Estaciones</b-button>
+      <b-sidebar id="sidebar-right" title="Sidebar" right shadow>
+        <div v-for="estacion in this.estaciones" :key="estacion.id">
+          <b-list-group>
+
+          <div class="ant-drawer-content-wrapper" style="width: 40vh;">
+            <div class="ant-drawer-content">
+              <div class="ant-drawer-wrapper-body" style="overflow: auto; height: 100%">
+              <div class="ant-drawer-body">
+              <div class="anr-spin-nested-loading">
+                <div class="ant-spin-container">
+                  <div class="ant-collapse ant-collapse-borderless ant-colapse-icon-position-right" role="tablist" style="margin-top: 1em">
+                      <div class="ant-collapse-item panel-header" style="background: rgb(247,247,247); border-radius: 4px; margin-top: 24px; border: 0px; overflow: hidden;">
+                          <div class="ant-collapse-header" role="tab" tabindex="0" aria-expanded="false">
+                            <div>
+                              <div class="container">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacion.id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">{{estacion.type}}</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;" @click="mostrarInfo(estacion)">Info</button>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="ant-collapse-content ant-collapse-content-inactive" role="tabpanel" style></div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>  
+
+          </b-list-group>
+        </div>
+      </b-sidebar>
+    </div>
+
+    <!--//Sidebar de la informaicon de las estacion especifica -->
+    <div class="px-3 py-4 bg-white" v-show="showInfo">
+    <li class="list-group-item text-left"><button type="button" class="btn-close" aria-label="Close" @click="closeList"></button></li>
+    <!-- <b-button v-b-toggle.sidebar-right>{{estacionActual[0].id}}</b-button> -->
+      <b-sidebar id="sidebar-right" title="Sidebar" right shadow>
+        <div v-for="estacion in this.estaciones" :key="estacion.id">
+          <b-list-group>
+          <div class="ant-drawer-content-wrapper" style="width: 40vh;">
+            <div class="ant-drawer-content">
+              <div class="ant-drawer-wrapper-body" style="overflow: auto; height: 100%">
+              <div class="ant-drawer-body">
+              <div class="anr-spin-nested-loading">
+                <div class="ant-spin-container">
+                  <div class="ant-collapse ant-collapse-borderless ant-colapse-icon-position-right" role="tablist" style="margin-top: 1em">
+                      <div class="ant-collapse-item panel-header" style="background: rgb(247,247,247); border-radius: 4px; margin-top: 24px; border: 0px; overflow: hidden;">
+                          <div class="ant-collapse-header" role="tab" tabindex="0" aria-expanded="false">
+                            <div>
+                              <!-- contenedor de los atributos de las estaciones-->
+                              <!-- <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div>
+                                <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div>
+                                <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div>
+                                <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div>
+                                <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div>
+                                <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div>
+                                <div class="container my-3">
+                                  <div class="row">
+                                    <div class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{estacionActual[0].id}}</div>
+                                    <div class="col order-12" style="color: rgba(115, 114, 114, 0.81); ">Type Estacion</div>
+                                    <button class="col order-1 btn btn-info" style="align-text: right;">Exportar</button>
+                                  </div>
+                                </div> -->
+                            </div>
+                            <div class="ant-collapse-content ant-collapse-content-inactive" role="tabpanel" style></div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>  
+          </b-list-group>
+          </div>
+      </b-sidebar>
+    </div>
 
   </div>
 </template>
@@ -36,6 +149,7 @@
       return {
         urlEstaciones: "http://127.0.0.1:3000/estaciones",
         estaciones: [],
+        atributes: {},
         markers: [
           // { name: "Estacion Orion",
           //   coordinates : [-38, -60]},
@@ -59,7 +173,8 @@
           pm25: 0,
           reliability: 0,
         },
-        showList: false,
+        showList: true,
+        showInfo: false,
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:'&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         zoom: 5,
@@ -73,7 +188,8 @@
         this.actualMarker = station
       },
       closeList() {
-        this.showList = false;
+        this.showInfo = false;
+        this.showList = true;
       },
       async getStations() {
         try{
@@ -83,10 +199,19 @@
         catch{
           console.log("Error en getStations() MAP VIEW")
         }
-
-        // console.log(e)
-        // console.log(e[0].location.value)
-      }
+      },
+     mostrarInfo(){
+        this.showInfo = true
+        this.showList = false
+        //this.getAtributes(estacion.id)
+        
+      },
+   /*async getAtributes(id){
+        const headerAxios = {headers:{"fiware-service":"respirar","fiware-servicepath":  "/"}}
+        let e = (await this.axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
+        this.atributes = {...e}
+        console.log(e);
+      }*/
     },
     computed: {}
   }
