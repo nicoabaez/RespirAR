@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-row">
-    <l-map style="height: 92.4vh" :zoom="zoom" :center="center">
+  <div class="d-flex flex-row" style="height: 92.1vh">
+    <l-map :zoom="7" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker
         v-for="estacion in this.estaciones"
@@ -11,9 +11,10 @@
       </l-marker>
     </l-map>
 
-    <div class="bg-white" style="max-height: 100%; width: 50vh;">
-      <b-sidebar id="sidebar-right" title="Sidebar" right shadow>
-        <div v-if="showList">
+  <!-- <div class="bg-white" style="max-height: 100vh; width: 50vh; overflow-y: auto;"> -->
+    <div class="bg-white" style="max-height: 100%; width: 50vh; overflow: auto;">
+      <b-sidebar id="sidebar-right" title="Sidebar" shadow>
+        <div v-if="showList" class="my-4">
           <b-button v-b-toggle.sidebar-right style="font-weight: 1000; font-size: 1.3em;">Estaciones</b-button>
           <div class="mx-2" v-for="estacion in this.estaciones" :key="estacion.id">
             <b-list-group>
@@ -33,6 +34,7 @@
         </div>
         <div v-else>
           <li class="list-group-item text-left"><button type="button" class="btn-close" aria-label="Close" @click="closeList"></button></li>
+          
           <div class="mx-2" v-for="(attribute, index) in this.attributes" :key="index">
             <b-list-group>
               <div class="panel-header" style="background: rgb(247,247,247); border-radius: 4px; margin-top: 24px; border: 0px; overflow: hidden;">

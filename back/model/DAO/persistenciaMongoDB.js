@@ -7,11 +7,12 @@ class PersistenciaMongoDAO {
 
 
     getHistorico = async (id) => {
+        console.log("entro aca id" +  id)
         const collection = `sth_/_${id}_IoT-Device`
         if (!CnxMongoDB.connection) return {}
         try {
             //let filtro = { '_id.id': id };
-            let sth = await CnxMongoDB.db.collection(collection).find().project({ _id:0, attrType:0, attrMetadata:0 }).toArray()
+            let sth = await CnxMongoDB.db.collection(collection).find().toArray()
             return sth 
         }catch(err){
             console.log("Error en MODEL", err)

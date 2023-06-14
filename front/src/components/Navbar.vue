@@ -13,14 +13,11 @@
           <li class="nav-item">
             <router-link to="/mapa" class="nav-link">Mapa</router-link>
           </li>
-          <li class="nav-item">
-            <a href="http://localhost:3000/" class="nav-link">Hola Mundo</a>
-          </li>
         </ul>
-        <form class="d-flex">
+        <!-- <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
           <button class="btn btn-outline-light" type="submit">Buscar</button>
-        </form>
+        </form> -->
       </div>
     </div>
   </nav>
