@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/"><img src="..\assets\logo_respirar.png" alt="" width="100" class="d-inline-block align-top"></a>
+      <a class="navbar-brand" href="/"><img src="..\assets\logo_respirar.png" width="100" class="d-inline-block align-top"></a>
       <button class="navbar-toggler" type="button" @click="isExpanded = !isExpanded">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -14,10 +14,6 @@
             <router-link to="/mapa" class="nav-link">Mapa</router-link>
           </li>
         </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
-          <button class="btn btn-outline-light" type="submit">Buscar</button>
-        </form> -->
       </div>
     </div>
   </nav>

@@ -5,14 +5,23 @@ import CnxMongoDB from '../DB.js'
 
 class PersistenciaMongoDAO {
 
-
     getHistorico = async (id) => {
-        console.log("entro aca id" +  id)
         const collection = `sth_/_${id}_IoT-Device`
         if (!CnxMongoDB.connection) return {}
         try {
-            //let filtro = { '_id.id': id };
             let sth = await CnxMongoDB.db.collection(collection).find().toArray()
+            return sth 
+        }catch(err){
+            console.log("Error en MODEL", err)
+            return []
+        }
+    }
+
+    getHistoricoByAttribute = async (id, atr) => {
+        const collection = `sth_/_${id}_IoT-Device`
+        if (!CnxMongoDB.connection) return {}
+        try {
+            let sth = await CnxMongoDB.db.collection(collection).find({ attrName: atr }).project( {recvTime:1 ,attrName:1 ,attrValue: 1} ).toArray()
             return sth 
         }catch(err){
             console.log("Error en MODEL", err)
@@ -39,17 +48,7 @@ class PersistenciaMongoDAO {
         
     }
 
-    findStations = async _ =>{
-        try {
-            let station = await CnxMongoDB.db.collection(collection).find().toArray() //.project({ _id:0 }).toArray()
-            console.log("STATIONS:", station)
-            return station
-        }
-        catch(err) {
-            console.log(err)
-            return []
-        }
-    }
+
     // setStations = async _ => {
     //     if (!CnxMongoDB.connection) return []
     //     try {

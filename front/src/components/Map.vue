@@ -1,13 +1,18 @@
 <template>
   <div class="d-flex flex-row" style="height: 92.1vh">
-    <l-map :zoom="7" :center="center">
+    <l-map :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker
         v-for="estacion in this.estaciones"
         :key="estacion.id"
         :lat-lng="estacion.location"
-        @click="menuLateral(estacion)">
-        <l-tooltip>{{ estacion.location }}</l-tooltip>
+        @click="mostrarInfo(estacion)">
+        <l-tooltip :v-bind="setAtributos(estacion.id)">
+          <div v-for="(atr, index) in this.attributes" :key="index">
+            <div>{{ index.toUpperCase() }}</div>
+            <div>{{ atr }}</div>
+          </div>
+        </l-tooltip>      
       </l-marker>
     </l-map>
 
@@ -43,6 +48,7 @@
                     <p class="col" style="font-weight: 300; font-size: 1.2em; align-text: left;">{{ index.toUpperCase() }}</p>
                     <p class="col order-12" style="color: rgba(115, 114, 114, 0.81);">{{ attribute }}</p>
                   </div>
+                  <button class="my-1 col order-1 btn btn-info" style="align-text: right;width: 100%;" @click="obtenerCSVAttr(this.stationActual.id, index)">Exportar</button>
                 </div>
                 <div class="ant-collapse-content ant-collapse-content-inactive" role="tabpanel"></div>
               </div>
@@ -62,26 +68,23 @@
     props: [],
     async mounted () {
       await this.getStations()
+      await this.setCenter()
     },
     data () {
       return {
         estaciones: [], //getStations()
         attributes: {}, //getAtributes(id)
-        actualMarker: {},
+        stationActual: {},
         showList: true,
         showInfo: false,
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:'&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        zoom: 5,
+        zoom: 6,
         center: [-38.4192641, -63.5989206],
         markerLatLng: [51.504, -0.159],
       };
     },
     methods: {
-      menuLateral(station){
-        this.mostrarInfo(station)
-        this.actualMarker = station
-      },
       closeList() {
         this.showInfo = false;
         this.showList = true;
@@ -89,11 +92,14 @@
       mostrarInfo(station){
         this.showInfo = true
         this.showList = false
+        this.stationActual = station
         this.setAtributos(station.id)
+        console.log(this.stationActual)
+        console.log(this.attributes)
       },
       async setAtributos(id){
         try{
-          let atrs = (await this.axios.get(`http://localhost:3000/atributos/${id}`)).data
+          let atrs = (await this.axios.get(`http://localhost:3000/estaciones/${id}`)).data
           this.attributes = {...atrs}
         }catch{
           console.log("Error en setAtributos(id)")
@@ -108,8 +114,19 @@
           console.log("Error en getStations()")
         }
       },
+      setCenter(){
+        try{
+          this.center = this.estaciones[0].location
+        }
+        catch{
+          console.log("Error en setCenter()")
+        }
+      },
       async obtenerCSV(id){
         window.location.href = `http://localhost:3000/getCSV/${id}`;
+      },
+      async obtenerCSVAttr(id, atr){
+        window.location.href = `http://localhost:3000/getCSV/${id}/${atr}`;
       }
 
     },

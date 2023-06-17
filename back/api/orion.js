@@ -11,21 +11,28 @@ class OrionApi {
         this.stationsModel = persistenciaFactory.get(config.MODO_PERSISTENCIA)
     }
 
-    async getStations(id) {
+    async getStation(id) {
         //return id? this.stationsModel.findStation(id) : await this.stationsModel.findStations()
-        return id? "" : await this.getStations()
+        return id? this.getOneStation(id) : this.getStations()
     }
 
-    //Al ser una regla de negocio, acá pedimos los datos actuales a orion y los enviamos a nuestro mongo propio, donde también tendríamos el histórico de las estaciones
     async getStations(){ 
-        try {
+        try {  
             return (await axios.get("http://localhost:1026/v2/entities?type=IoT-Device&options=keyValues", headerAxios)).data
         } catch (error) {
             console.error('Error en getStations()', error.message)
         }
     }
 
-    async getAtributes(id){
+    async getOneStation(id){
+        try {
+            return (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
+        } catch (error) {
+            console.error('Error en getStations()', error.message)
+        }
+    }
+
+    async getOneStation(id){
         try {
             return (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
         } catch (error) {
@@ -45,6 +52,16 @@ class OrionApi {
             console.error('Error en getHistorico(id)', error.message)
         }
     }
+
+    
+    async getHistoricoByAttribute(id, atr){
+        try {
+            return await this.stationsModel.getHistoricoByAttribute(id, atr)
+        } catch (error) {
+            console.error('Error en getHistorico(id)', error.message)
+        }
+    }
+    
 }
 
 export default OrionApi
