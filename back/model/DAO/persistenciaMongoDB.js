@@ -9,7 +9,7 @@ class PersistenciaMongoDAO {
         const collection = `sth_/_${id}_IoT-Device`
         if (!CnxMongoDB.connection) return {}
         try {
-            let sth = await CnxMongoDB.db.collection(collection).find().toArray()
+            let sth = await CnxMongoDB.db.collection(collection).find().project( {recvTime: 1 ,attrName: 1 ,attrValue: 1, _id: 0} ).toArray()
             return sth 
         }catch(err){
             console.log("Error en MODEL", err)
@@ -21,7 +21,7 @@ class PersistenciaMongoDAO {
         const collection = `sth_/_${id}_IoT-Device`
         if (!CnxMongoDB.connection) return {}
         try {
-            let sth = await CnxMongoDB.db.collection(collection).find({ attrName: atr }).project( {recvTime:1 ,attrName:1 ,attrValue: 1} ).toArray()
+            let sth = await CnxMongoDB.db.collection(collection).find({ attrName: atr }).project( {recvTime: 1 ,attrName: 1 ,attrValue: 1, _id: 0} ).toArray()
             return sth 
         }catch(err){
             console.log("Error en MODEL", err)
@@ -30,23 +30,23 @@ class PersistenciaMongoDAO {
     }
 
 
-    findStation = async id => {
-        console.log(id)
-        if (!CnxMongoDB.connection) return {}
-        try {
-            let filtro = { '_id.id': id };
-            let station = await CnxMongoDB.db.collection(collection).findOne(filtro)
-            return station 
-        }catch{
-            try{
-                let station = await CnxMongoDB.db.collection(collection).findOne({ id: id })
-                return station 
-            }catch{
-                return {}
-            }
-        }
+    // findStation = async id => {
+    //     console.log(id)
+    //     if (!CnxMongoDB.connection) return {}
+    //     try {
+    //         let filtro = { '_id.id': id };
+    //         let station = await CnxMongoDB.db.collection(collection).findOne(filtro)
+    //         return station 
+    //     }catch{
+    //         try{
+    //             let station = await CnxMongoDB.db.collection(collection).findOne({ id: id })
+    //             return station 
+    //         }catch{
+    //             return {}
+    //         }
+    //     }
         
-    }
+    // }
 
 
     // setStations = async _ => {

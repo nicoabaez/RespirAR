@@ -3,7 +3,6 @@
     <Navbar />
     <router-view class="componentes"/>
   </div>
-
 </template>
 
 <script>
@@ -21,13 +20,14 @@ export default {
     background-color: #283456;
     background: url('http://www.calidadmedioambiental.org/static/media/background.e48737ad.png') no-repeat 50% fixed;
     background-size: cover;
+    margin: 0;
+    padding: 0;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #2c3e50;   
   }
-
 </style>

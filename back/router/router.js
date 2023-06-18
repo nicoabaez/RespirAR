@@ -12,9 +12,9 @@ export class RouterMain {
        
         this.router.get('/getHistorico/:id', this.controladorStations.getHistorico)
         
-        this.router.get('/getHistorico/:id/:atr', this.controladorStations.getHistoricoByAttribute)
+        this.router.get('/getHistorico/:id/:attr', this.controladorStations.getHistoricoByAttribute)
 
-        this.router.get('/getCSV/:id', this.controladorStations.getCSV)
+        this.router.get('/getCSV/:id/:attr?', this.controladorStations.getCSV)
         
         return this.router
     }

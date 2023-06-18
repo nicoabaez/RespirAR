@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><img src="..\assets\logo_respirar.png" width="100" class="d-inline-block align-top"></a>
       <button class="navbar-toggler" type="button" @click="isExpanded = !isExpanded">
@@ -32,8 +32,15 @@ export default {
 </script>
 
 <style>
-.navbar {
+
+#navbar {
   transition: background-color 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  height: 70px;
 }
 
 .navbar-nav .nav-link {
