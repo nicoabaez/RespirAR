@@ -41,12 +41,7 @@ class ControladorStations {
             let csvData
             if (attr) { csvData = await this.apiStations.generateCsvData(id, attr) } 
             else      { csvData = await this.apiStations.generateCsvData(id) }
-            // res.download(csvData);
-            // fs.unlink(csvData, (error) => {
-            //     if (error) {
-            //       console.error(`Error al eliminar el archivo ${csvData}: ${error}`);
-            //     }
-            // });
+
             res.download(csvData, () => {
                 // Retraso de 3 segundo antes de eliminar el archivo
                 setTimeout(() => {

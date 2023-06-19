@@ -39,14 +39,14 @@
             <p class="text-center flex-grow-1" style="font-weight: 1000; font-size: 1.3em;">{{this.stationActual.name}}</p>
             <button class="btn-close" type="button" aria-label="Close" @click="closeList"></button>
           </div>
-          <div class="mx-3 my-3" v-for="(attribute, index) in this.attributes" :key="index">
+          <div class="mx-3 my-3" v-for="(value, attr) in this.attributes" :key="attr">
             <b-list-group>
               <div class="panel-header" style="background: rgb(247,247,247); border-radius: 4px; border: 0px; overflow: hidden;">
                 <div class="container my-3 d-flex align-items-center">
-                  <p class="col" style="font-weight: 300; font-size: 1.2em; margin-bottom: 0;">{{ index.toUpperCase() }}</p>
-                  <p class="col" style="color: rgba(115, 114, 114, 0.81); margin-bottom: 0;">{{ attribute }}</p>
+                  <p class="col" style="font-weight: 300; font-size: 1.2em; margin-bottom: 0;">{{ traduceToSpanish(attr.toUpperCase()) }}</p>
+                  <p class="col" style="color: rgba(115, 114, 114, 0.81); margin-bottom: 0;">{{ value + addFormat(attr) }}</p>
                 </div>
-                <button class="col my-3 order-1 btn btn-success" @click="obtenerCSVAttr(this.stationActual.id, index)">Exportar</button>
+                <button class="col my-3 order-1 btn btn-success" @click="obtenerCSVAttr(this.stationActual.id, attr)">Exportar</button>
               </div>
             </b-list-group>
           </div>
@@ -120,7 +120,7 @@
         window.location.href = `http://localhost:3000/getCSV/${id}`;
       },
       async obtenerCSVAttr(id, attr){
-        window.location.href = `http://localhost:3000/getCSV/${id}/${attr}`;
+        window.location.href = `http://localhost:3000/getCSV/${id}/${attr}/`;
       },
       mouseHover(e){
         this.closeList()
@@ -130,6 +130,35 @@
         if (markerElement) {
           markerElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+      },
+      traduceToSpanish(attr){
+        switch (attr) {
+          case 'TEMPERATURE': 
+            attr = 'TEMPERATURA' 
+            break;
+          case 'RELIABILITY': 
+            attr = 'FIABILIDAD'
+            break;
+          case 'PM25': 
+            attr = 'PM2.5' 
+            break;
+        }
+        return attr
+      },
+      addFormat(attr){
+        let unity = ''
+        switch (attr) {
+          case 'temperature': 
+            unity = ' °C' 
+            break;
+          case 'reliability': 
+            unity = ' %'
+            break;
+          default: 
+            unity = ' μg/m³' 
+            break;
+        }
+        return unity
       }
     },
     computed: {}

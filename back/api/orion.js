@@ -9,8 +9,6 @@ const filtro = '&attrs=!TimeInstant,!location,!name,pm1,pm10,pm25,reliability,te
 
 class OrionApi {
 
-
-
     constructor() {
         this.stationsModel = persistenciaFactory.get(config.MODO_PERSISTENCIA)
     }
@@ -36,93 +34,41 @@ class OrionApi {
     }
 
     async generateCsvData(id, attr) {
-        const station = await this.getOneStation(id)
+        let station = await (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
         let sth
         let fileName
         const date = moment(Date.now()).format('YYYY-MM-DD_HH-mm-ss')
         
         console.log(attr)
         if (attr) {
-          sth = await this.getHistoricoByAttribute(id, attr)
-          fileName = `Historico_${station.name}_${attr}_${date}.csv`
+            sth = await this.getHistoricoByAttribute(id, attr)
+            fileName = `Historico_${station.name}_${attr}_${date}.csv`
         } else {
-          sth = await this.getHistorico(id)
-          fileName = `Historico_${station.name}_${date}.csv`
+            sth = await this.getHistorico(id)
+            fileName = `Historico_${station.name}_${date}.csv`
         }
-      
+        
         const writer = csvWriter.createObjectCsvWriter({
-          path: fileName,
-          header: [
+            path: fileName,
+            header: [
             { id: 'n', title: 'ATRIBUTO' },
             { id: 'd', title: 'FECHA' },
             { id: 'v', title: 'VALOR' },
             // Agrega más columnas aquí
-          ],
+            ],
         });
-      
+        
         const csvData = sth.map((e) => ({
-          d: moment(e.recvTime).format('YYYY-MM-DD HH:mm:ss'),
-          n: e.attrName.toUpperCase(),
-          v: e.attrValue,
+            n: e.attrName.toUpperCase(),
+            d: moment(e.recvTime).format('YYYY-MM-DD HH:mm:ss'),
+            v: e.attrValue,
         }));
-      
+        
         await writer.writeRecords(csvData);
-      
+        
         return fileName;
-      }
-
-    // async generateCsvData(id){
-    //     const station = await this.getOneStation(id);
-    //     const sth = await this.getHistorico(id);
-
-
-    //     console.log(sth)
-
-    //     const writer = csvWriter.createObjectCsvWriter({
-    //         path: `Historico_${station.name}.csv`,
-    //         header: [
-    //           { id: 'd', title: 'Date' },
-    //           { id: 'n', title: 'Name' },
-    //           { id: 'v', title: 'Value' },
-    //           // Agrega más columnas aquí
-    //         ],
-    //       });
-    //     const csvData = sth.map((e) => ({
-    //     d: moment(e.recvTime).format('YYYY-MM-DD HH:mm:ss'),
-    //     n: e.attrName.toUpperCase() ,
-    //     v: e.attrValue,
-    //     }));
+    }
     
-    //     await writer.writeRecords(csvData);
-    
-    //     return `Historico_${station.name}.csv`
-    // }
-
-    // async generateCsvDataByAttr(id, attr){
-    //     const station = await this.getOneStation(id);
-    //     const sth = await this.getHistoricoByAttribute(id,attr);
-    //     const date = Date.now()
-    //     console.log(date)
-    //     const writer = csvWriter.createObjectCsvWriter({
-    //         path: `Historico_${station.name}_${attr}_${date}.csv`,
-    //         header: [
-    //           { id: 'd', title: 'Date' },
-    //           { id: 'n', title: 'Name' },
-    //           { id: 'v', title: 'Value' },
-    //           // Agrega más columnas aquí
-    //         ],
-    //       });
-    //     const csvData = sth.map((e) => ({
-    //     d: moment(e.recvTime).format('YYYY-MM-DD HH:mm:ss'),
-    //     n: e.attrName.toUpperCase(),
-    //     v: e.attrValue,
-    //     }));
-    
-    //     await writer.writeRecords(csvData);
-    
-    //     return `Historico_${station.name}_${attr}_${date}.csv`
-    // }
-
     async getHistorico(id){
         try {
             return await this.stationsModel.getHistorico(id)
@@ -131,7 +77,6 @@ class OrionApi {
         }
     }
 
-    
     async getHistoricoByAttribute(id, attr){
         try {
             return await this.stationsModel.getHistoricoByAttribute(id, attr)
