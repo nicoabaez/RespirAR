@@ -6,7 +6,6 @@ import morgan from 'morgan'
 import cors from 'cors'
 
 //---- AGREGO PARA PROBAR
-// import history from 'connect-history-api-fallback'
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -51,4 +50,4 @@ class Server {
 
 }
 
-export default Server
+export default Server

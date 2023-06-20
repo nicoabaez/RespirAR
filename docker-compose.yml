@@ -1,12 +1,4 @@
 services:
-  # backend:
-  #   build: back/.
-  #   ports:
-  #     - "3000:3000"    
-  # frontend:
-  #   build: front/.
-  #   ports:
-  #     - "8080:8080"
   mongo-db:
     image: mongo
     hostname: mongo-db
@@ -21,6 +13,7 @@ services:
       - mongo-data:/data/configdb
   orion:
     image: fiware/orion
+    container_name: orion
     links:
       - mongo-db
     ports:
@@ -86,8 +79,36 @@ services:
         - IOTA_PROVIDER_URL=http://iot-agent:4041
     volumes:
       - iotagent-data:/var/lib/iotagent
+  backend:
+    container_name: backend
+    build: back/.
+    ports:
+      - "3000:3000"    
+    environment:
+      - BACK_PORT=3000
+      - MODO_PERSISTENCIA=MONGO
+      - MONGO_HOST=mongo-db
+      - DATABASE_URL=mongodb://mongo-db:27017/
+      - MONGO_BASE=sth_respirar
+      - ORION_HOST=orion
+    networks:
+      - fiware_network
+  frontend:
+    container_name: frontend
+    build: front/.
+    ports:
+      - "8080:8080"
+    environment:
+      - BACK_HOST=backend
+      - BACK_PORT=3000
+      #- BACK_URL=http://backend:3000
+      - BACK_URL=http://localhost:3000
+      
+    networks:
+      - fiware_network
 networks:
   fiware_network:
+    driver: bridge
 volumes:
   mongo-data:
   draco-data:

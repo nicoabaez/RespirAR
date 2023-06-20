@@ -53,18 +53,19 @@
         </div>
       </b-sidebar>
     </div>
-
   </div>
 </template>
 
 <script lang="js">
+
+  const backendUrl = process.env.BACK_URL
 
   export default  {
     name: 'src-componentes-mapa',
     props: [],
     async mounted () {
       await this.getStations()
-      await this.setCenter()
+      this.setCenter()
     },
     data () {
       return {
@@ -75,7 +76,7 @@
         showInfo: false,
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:'&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        zoom: 13,
+        zoom: 6,
         center: [-38.4192641, -63.5989206],
         markerLatLng: [51.504, -0.159],
       };
@@ -93,7 +94,7 @@
       },
       async setAtributos(id){
         try{
-          let atrs = (await this.axios.get(`http://localhost:3000/estaciones/${id}`)).data
+          let atrs = (await this.axios.get(`${backendUrl}/estaciones/${id}`)).data
           this.attributes = {...atrs}
         }catch{
           console.log("Error en setAtributos(id)")
@@ -101,7 +102,7 @@
       },
       async getStations() {
         try{
-          let e = (await this.axios.get('http://localhost:3000/estaciones')).data
+          let e = (await this.axios.get(`${backendUrl}/estaciones`)).data
           this.estaciones = {...e}
         }
         catch{
@@ -111,16 +112,17 @@
       setCenter(){
         try{
           this.center = this.estaciones[0].location
+          this.zoom = 13
         }
         catch{
           console.log("Error en setCenter()")
         }
       },
       async obtenerCSV(id){
-        window.location.href = `http://localhost:3000/getCSV/${id}`;
+        window.location.href = `${backendUrl}/getCSV/${id}`;
       },
       async obtenerCSVAttr(id, attr){
-        window.location.href = `http://localhost:3000/getCSV/${id}/${attr}/`;
+        window.location.href = `${backendUrl}/getCSV/${id}/${attr}/`;
       },
       mouseHover(e){
         this.closeList()

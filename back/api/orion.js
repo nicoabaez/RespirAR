@@ -6,6 +6,7 @@ import moment from 'moment'
 
 const headerAxios = {headers:{"fiware-service":"respirar","fiware-servicepath":  "/"}}
 const filtro = '&attrs=!TimeInstant,!location,!name,pm1,pm10,pm25,reliability,temperature'
+const ipOrion = config.ORION
 
 class OrionApi {
 
@@ -19,7 +20,7 @@ class OrionApi {
 
     async getStations(){ 
         try {  
-            return (await axios.get(`http://localhost:1026/v2/entities?type=IoT-Device&options=keyValues`, headerAxios)).data
+            return (await axios.get(`http://${ipOrion}:1026/v2/entities?type=IoT-Device&options=keyValues`, headerAxios)).data
         } catch (error) {
             console.error('Error en getStations()', error.message)
         }
@@ -27,14 +28,14 @@ class OrionApi {
 
     async getOneStation(id){
         try {
-            return (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues${filtro}`, headerAxios)).data
+            return (await axios.get(`http://${ipOrion}:1026/v2/entities/${id}/attrs?options=keyValues${filtro}`, headerAxios)).data
         } catch (error) {
             console.error('Error en getStations()', error.message)
         }
     }
 
     async generateCsvData(id, attr) {
-        let station = await (await axios.get(`http://localhost:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
+        let station = await (await axios.get(`http://${ipOrion}:1026/v2/entities/${id}/attrs?options=keyValues`, headerAxios)).data
         let sth
         let fileName
         const date = moment(Date.now()).format('YYYY-MM-DD_HH-mm-ss')

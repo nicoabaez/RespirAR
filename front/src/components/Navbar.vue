@@ -40,7 +40,7 @@ export default {
   left: 0;
   width: 100%;
   z-index: 9999;
-  height: 70px;
+  min-height: 70px;
 }
 
 .navbar-nav .nav-link {
