@@ -7,7 +7,6 @@
         :key="estacion.id"
         :lat-lng="estacion.location"
         @mouseover="mouseHover(estacion)"
-        @mouseout="markedFalse"
         @click="mostrarInfo(estacion)">
         <l-tooltip>
           <div>{{ this.stationActual.name }}</div>
@@ -28,7 +27,7 @@
                     <p class="col order-12">{{ stAux.type }}</p>
                   </div>
                   <button class="my-1 col order-1 btn btn-info" style="align-text: right;width: 100%;" @click="mostrarInfo(stAux)">Info</button>
-                  <button class="my-1 col order-1 btn btn-success" style="align-text: right;width: 100%;" @click="obtenerCSV(stAux.id)">Exportar</button>
+                  <button class="my-1 col order-1 btn btn-success" style="align-text: right;width: 100%;" @click="getCSV(stAux.id)">Exportar</button>
                 </div>
               </div>
             </b-list-group>
@@ -42,11 +41,14 @@
           <div class="mx-3 my-3" v-for="(value, attr) in this.attributes" :key="attr">
             <b-list-group>
               <div class="panel-header" style="background: rgb(247,247,247); border-radius: 4px; border: 0px; overflow: hidden;">
-                <div class="container my-3 d-flex align-items-center">
-                  <p class="col" style="font-weight: 300; font-size: 1.2em; margin-bottom: 0;">{{ traduceToSpanish(attr.toUpperCase()) }}</p>
-                  <p class="col" style="color: rgba(115, 114, 114, 0.81); margin-bottom: 0;">{{ value + addFormat(attr) }}</p>
+                <div class="container my-3">
+                  <div class="row">
+                    <p class="col" style="font-weight: 300; font-size: 1.2em; margin-bottom: 0;">{{ traduceToSpanish(attr.toUpperCase()) }}</p>
+                    <p class="col" style="color: rgba(115, 114, 114, 0.81); margin-bottom: 0;">{{ value + addFormat(attr) }}</p>
+                  </div>
                 </div>
-                <button class="col my-3 order-1 btn btn-success" @click="obtenerCSVAttr(this.stationActual.id, attr)">Exportar</button>
+                <button class="col my-2 order-1 btn btn-info" style="align-text: right;width: 50%;" @click="getSTHAttr(this.stationActual.id, attr)">Ver Histórico</button>
+                <button class="col order-1 btn btn-success" style="align-text: right;width: 90%;" @click="getCSVAttr(this.stationActual.id, attr)">Exportar</button>
               </div>
             </b-list-group>
           </div>
@@ -57,8 +59,8 @@
 </template>
 
 <script lang="js">
-
-  const backendUrl = process.env.BACK_URL
+  //const backendUrl = 'http://46.17.108.112:3000'
+  const backendUrl = 'http://localhost:3000'
 
   export default  {
     name: 'src-componentes-mapa',
@@ -105,8 +107,8 @@
           let e = (await this.axios.get(`${backendUrl}/estaciones`)).data
           this.estaciones = {...e}
         }
-        catch{
-          console.log("Error en getStations()")
+        catch(err){
+          console.log("Error en getStations()", err)
         }
       },
       setCenter(){
@@ -114,15 +116,18 @@
           this.center = this.estaciones[0].location
           this.zoom = 13
         }
-        catch{
-          console.log("Error en setCenter()")
+        catch(err){
+          console.log("Error en setCenter()", err)
         }
       },
-      async obtenerCSV(id){
+      async getCSV (id){
         window.location.href = `${backendUrl}/getCSV/${id}`;
       },
-      async obtenerCSVAttr(id, attr){
+      async getCSVAttr (id, attr){
         window.location.href = `${backendUrl}/getCSV/${id}/${attr}/`;
+      },
+      async getSTHAttr (id, attr){
+        window.location.href = `${backendUrl}/getHistorico/${id}/${attr}/`;
       },
       mouseHover(e){
         this.closeList()
